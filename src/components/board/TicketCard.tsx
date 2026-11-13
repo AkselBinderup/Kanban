@@ -2,6 +2,8 @@
 
 import type { Status, User } from '../../types/auth';
 import type { Ticket } from '../../types/ticket';
+import {useDraggable} from '@dnd-kit/react';
+
 
 export function TicketCard({ ticket, bruger, kolonner, skiftStatus, klikKort }: {
   ticket: Ticket;
@@ -12,8 +14,27 @@ export function TicketCard({ ticket, bruger, kolonner, skiftStatus, klikKort }: 
 }) {
   const erStaff = bruger.role !== 'User';
 
+  const { ref, isDragging } = useDraggable({
+    id: ticket.ticketId,  
+    data: { ticket },    
+    disabled: !erStaff,    
+  });
+
   return (
-    <div onClick={() => klikKort(ticket)} className="bg-white border p-2 cursor-pointer">
+   <div
+      ref={ref}
+      onClick={() => {
+        if (!isDragging) klikKort(ticket);
+      }}
+      className={`bg-white border p-2 ${
+        erStaff ? 'cursor-grab active:cursor-grabbing' : 'cursor-pointer'
+      } ${isDragging ? 'opacity-50' : ''}`}
+    >
+
+
+
+
+
       <div className="flex justify-between text-xs">
         <span>#{ticket.ticketId}</span>
         <b>{ticket.priority}</b>

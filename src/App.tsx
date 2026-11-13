@@ -94,7 +94,9 @@ export default function App() {
       <Navbar
         bruger={bruger}
         logUd={() => sætBruger(null)}
-        åbnNy={() => { sætAktivTicket(null); sætVisModal(true); }}
+        åbnNy={() => { sætAktivTicket(null); sætVisModal(true);
+        
+        }}
       />
 
       <FilterBar
